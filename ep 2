@@ -1,0 +1,106 @@
+Aim: To explore and practice basic Git and GitHub commands for version control.
+
+Requirements:
+- Git
+- GitHub account
+- Terminal / Git Bash
+1. Configure Git
+Set your username and email.
+git config --global user.name "Vaishnavi"
+git config --global user.email "vaishnavi@gmail.com"
+
+
+Check configuration:
+git config --list
+
+
+Output:
+user.name=Vaishnavi
+user.email=vaishnavi@gmail.com
+
+
+2. Create a local repository
+mkdir DevOps
+cd DevOps
+git init
+
+
+Output:
+Initialized empty Git repository
+
+
+3. Create a file
+echo "Welcome to DevOps Lab" > file.txt
+
+
+4. Check repository status
+git status
+
+
+Output:
+Untracked files:
+    file.txt
+
+
+5. Add files to staging area
+git add file.txt
+
+
+6. Commit changes
+git commit -m "First commit"
+
+
+Output:
+1 file changed
+
+
+7. View commit history
+git log --oneline
+
+
+8. Create a branch
+git branch feature
+
+
+Switch to the branch:
+git checkout feature
+
+
+Or use:
+git switch feature
+
+
+9. Merge branches
+Switch to the main branch:
+git checkout main
+
+
+Merge the feature branch:
+git merge feature
+
+
+10. Connect to GitHub
+Create an empty repository on GitHub and copy its HTTPS URL.
+git remote add origin https://github.com/username/DevOps.git
+
+
+Rename the branch:
+git branch -M main
+
+
+Push the code:
+git push -u origin main
+
+
+11. Other important Git commands
+Command	Purpose
+git clone URL	Copy a remote repository
+git pull	Download and integrate latest changes
+git fetch	Download changes without merging
+git push	Upload local commits
+git diff	Show file differences
+git status	Check repository status
+git rm file.txt	Remove a tracked file
+git stash	Temporarily save changes
+git branch	Display branches
+git reset	Move HEAD to another commit
