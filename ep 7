@@ -1,0 +1,119 @@
+Aim: To explore and practice basic Docker commands for managing containers and images.
+
+Requirements:
+- Docker
+- Ubuntu terminal
+- Internet connection
+Step 1: Check Docker version
+docker --version
+
+
+Output:
+Docker version ...
+
+
+Step 2: Check Docker information
+docker info
+
+
+Displays information about Docker, containers, images, and storage.
+Step 3: Download an image
+docker pull hello-world
+
+
+Output:
+Status: Downloaded newer image for hello-world
+
+
+Step 4: Display Docker images
+docker images
+
+
+Output:
+REPOSITORY     TAG       IMAGE ID
+hello-world    latest    xxxxx
+
+
+Step 5: Run a container
+docker run hello-world
+
+
+Output:
+Hello from Docker!
+This message shows that your installation appears to be working correctly.
+
+
+Step 6: Run an interactive Ubuntu container
+docker run -it ubuntu bash
+
+
+Inside the container:
+echo "Welcome to Docker"
+
+
+Output:
+Welcome to Docker
+
+
+Exit the container:
+exit
+
+
+Step 7: Display running containers
+docker ps
+
+
+Displays currently running containers.
+
+To display all containers:
+docker ps -a
+
+
+Step 8: Start a container
+docker start container_id
+
+
+Step 9: Stop a container
+docker stop container_id
+
+
+Step 10: Restart a container
+docker restart container_id
+
+
+Step 11: Remove a container
+docker rm container_id
+
+
+Step 12: Remove an image
+docker rmi hello-world
+
+
+Step 13: View container logs
+docker logs container_id
+
+
+Step 14: View container processes
+docker top container_id
+
+
+Step 15: Inspect a container
+docker inspect container_id
+
+
+Important Docker commands
+Command	Description
+docker pull	Download an image
+docker images	List images
+docker run	Create and run a container
+docker ps	List running containers
+docker ps -a	List all containers
+docker start	Start a stopped container
+docker stop	Stop a running container
+docker restart	Restart a container
+docker rm	Remove a container
+docker rmi	Remove an image
+docker logs	Display container logs
+docker exec -it	Execute commands inside a running container
+
+Result: Successfully explored and executed basic Docker commands for managing images and containers.
