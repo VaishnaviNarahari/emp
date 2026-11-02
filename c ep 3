@@ -1,0 +1,123 @@
+Aim: To install and explore Karate and Spring Boot testing frameworks for performing automated testing of applications.
+
+Requirements:
+- Java JDK 17 or later
+- Maven
+- Spring Boot
+- Karate Framework
+- VS Code / IntelliJ IDEA
+Part A: Install and explore Karate
+What is Karate?
+
+Karate is an open-source testing framework used to test REST APIs. It supports API requests such as GET, POST, PUT and DELETE.
+Step 1: Create a Maven project
+Add the following dependencies to pom.xml:
+<dependencies>
+    <dependency>
+        <groupId>com.intuit.karate</groupId>
+        <artifactId>karate-junit5</artifactId>
+        <version>1.4.1</version>
+        <scope>test</scope>
+    </dependency>
+
+    <dependency>
+        <groupId>org.junit.jupiter</groupId>
+        <artifactId>junit-jupiter</artifactId>
+        <version>5.10.2</version>
+        <scope>test</scope>
+    </dependency>
+</dependencies>
+
+
+Step 2: Create a Karate feature file
+Create the following folder:
+src/test/java
+
+
+Create sample.feature:
+Feature: Sample API Testing
+
+Scenario: Test GET request
+    Given url 'https://jsonplaceholder.typicode.com/posts/1'
+    When method GET
+    Then status 200
+    And match response.id == 1
+
+
+Step 3: Create a test runner
+Create KarateTest.java:
+import com.intuit.karate.junit5.Karate;
+
+class KarateTest {
+
+    @Karate.Test
+    Karate testSample() {
+        return Karate.run("sample");
+    }
+}
+
+
+Step 4: Execute the test
+mvn test
+
+
+Expected output:
+Karate version: 1.4.1
+
+Scenario: Test GET request
+status code: 200
+
+Tests run: 1
+BUILD SUCCESS
+
+
+Part B: Explore Spring Boot Testing
+What is Spring Boot Testing?
+
+Spring Boot Testing is used to test Spring Boot applications and verify whether their components and REST APIs work correctly.
+
+It commonly uses:
+- JUnit – Testing framework.
+- Mockito – Mocking dependencies.
+- MockMvc – Testing REST APIs without starting a real web server.
+- Spring Boot Test – Provides testing support for Spring applications.
+Step 1: Add dependencies to pom.xml
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-test</artifactId>
+    <scope>test</scope>
+</dependency>
+
+
+Step 2: Create a simple test class
+Create SimpleTest.java inside src/test/java.
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
+class SimpleTest {
+
+    @Test
+    void testAddition() {
+
+        int a = 10;
+        int b = 20;
+
+        int result = a + b;
+
+        assertEquals(30, result);
+    }
+}
+
+
+Step 3: Execute the test
+mvn test
+
+
+Expected output:
+Tests run: 1
+Failures: 0
+Errors: 0
+BUILD SUCCESS
+
+
+Result: Successfully installed and explored Karate and Spring Boot testing frameworks and executed sample automated tests.
