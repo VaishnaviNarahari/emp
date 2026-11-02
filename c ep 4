@@ -1,0 +1,224 @@
+Aim: To develop a simple JavaScript application and perform automated API testing using the Karate framework.
+
+We will create a simple Calculator API using JavaScript and Node.js, then test it using Karate.
+
+Requirements:
+- Node.js
+- Java JDK
+- Maven
+- Karate Framework
+- VS Code
+Step 1: Create a project
+Create a folder named KarateJavaScript.
+KarateJavaScript/
+ ├── server.js
+ └── karate-tests/
+      ├── pom.xml
+      └── src/
+           └── test/
+                └── java/
+                     ├── CalculatorTest.java
+                     └── calculator.feature
+
+
+Step 2: Write the JavaScript program
+Create server.js.
+const express = require('express');
+
+const app = express();
+
+app.use(express.json());
+
+app.post('/add', (req, res) => {
+
+    const a = req.body.a;
+    const b = req.body.b;
+
+    const result = a + b;
+
+    res.json({
+        operation: "addition",
+        result: result
+    });
+});
+
+app.get('/', (req, res) => {
+    res.send("Calculator API is running");
+});
+
+app.listen(3000, () => {
+    console.log("Server running on port 3000");
+});
+
+
+Step 3: Install Node.js dependencies
+Open the terminal in the project folder.
+npm init -y
+
+
+Install Express:
+npm install express
+
+
+Step 4: Run the JavaScript application
+node server.js
+
+
+Output:
+Server running on port 3000
+
+
+Step 5: Test manually
+Send a POST request to:
+http://localhost:3000/add
+
+
+Input (JSON):
+{
+    "a": 10,
+    "b": 20
+}
+
+
+Output:
+{
+    "operation": "addition",
+    "result": 30
+}
+
+
+Step 6: Create Maven pom.xml
+Inside the karate-tests folder, create pom.xml.
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.example</groupId>
+    <artifactId>karate-tests</artifactId>
+    <version>1.0</version>
+
+    <properties>
+        <maven.compiler.release>17</maven.compiler.release>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <karate.version>1.4.1</karate.version>
+        <junit.version>5.10.2</junit.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.intuit.karate</groupId>
+            <artifactId>karate-junit5</artifactId>
+            <version>${karate.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.2.5</version>
+                <configuration>
+                    <includes>
+                        <include>**/*Test.java</include>
+                    </includes>
+                    <systemPropertyVariables>
+                        <karate.options>--tags ~@ignore</karate.options>
+                    </systemPropertyVariables>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
+
+
+Step 7: Write Karate test cases
+Create calculator.feature inside src/test/java.
+Feature: Calculator API Testing
+
+Background:
+    * url 'http://localhost:3000'
+
+Scenario: Test addition of two numbers
+    Given path 'add'
+    And request { a: 10, b: 20 }
+    When method POST
+    Then status 200
+    And match response.result == 30
+    And match response.operation == 'addition'
+
+Scenario: Test addition with zero
+    Given path 'add'
+    And request { a: 5, b: 0 }
+    When method POST
+    Then status 200
+    And match response.result == 5
+
+Scenario: Test API home page
+    Given path '/'
+    When method GET
+    Then status 200
+    And match response == 'Calculator API is running'
+
+
+Step 8: Create Karate test runner
+Create CalculatorTest.java:
+import com.intuit.karate.junit5.Karate;
+
+class CalculatorTest {
+
+    @Karate.Test
+    Karate testCalculator() {
+        return Karate.run("calculator");
+    }
+}
+
+
+Step 9: Execute Karate tests
+Keep the JavaScript server running in the first terminal.
+
+Open another terminal and enter the karate-tests folder.
+
+Execute:
+mvn test
+
+
+Expected output
+Scenario: Test addition of two numbers
+Scenario: Test addition with zero
+Scenario: Test API home page
+
+Tests run: 3
+Failures: 0
+Errors: 0
+
+BUILD SUCCESS
+
+
+Explanation of Karate keywords
+Keyword	Meaning
+Feature	Describes the feature being tested
+Background	Common setup for scenarios
+Scenario	Individual test case
+Given	Initial condition
+When	Action performed
+Then	Expected result
+And	Additional condition
+url	Specifies API URL
+path	Specifies API endpoint
+request	Sends request data
+method	Executes HTTP method
+status	Checks HTTP status
+match	Compares actual and expected values
+
+Result: Successfully developed a JavaScript Calculator API and performed automated API testing using Karate Framework.
