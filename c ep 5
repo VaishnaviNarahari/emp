@@ -1,0 +1,184 @@
+Aim: To develop and execute test cases for the User Registration application using Spring Boot Testing framework.
+
+Requirements:
+- Java JDK
+- Spring Boot
+- Maven
+- JUnit 5
+- Spring Boot Test
+- MockMvc
+We will use the same User Registration application from Cycle 1, Exercise 1.
+Step 1: Add testing dependency
+Open pom.xml and add:
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-test</artifactId>
+    <scope>test</scope>
+</dependency>
+
+
+This dependency provides JUnit, Mockito and Spring Boot testing support.
+Step 2: Create User.java
+package com.example.registration;
+
+public class User {
+
+    private String name;
+    private String email;
+    private String password;
+
+    public User() {
+    }
+
+    public User(String name, String email, String password) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+}
+
+
+Step 3: Create UserController.java
+package com.example.registration;
+
+import org.springframework.web.bind.annotation.*;
+import java.util.*;
+
+@RestController
+@RequestMapping("/users")
+public class UserController {
+
+    List<User> users = new ArrayList<>();
+
+    @PostMapping("/register")
+    public String registerUser(@RequestBody User user) {
+
+        users.add(user);
+
+        return "Registration Successful!";
+    }
+
+    @GetMapping
+    public List<User> getUsers() {
+
+        return users;
+    }
+}
+
+
+Step 4: Create test class
+Create the following file:
+
+src/test/java/com/example/registration/UserControllerTest.java
+package com.example.registration;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.http.MediaType;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
+@SpringBootTest
+@AutoConfigureMockMvc
+class UserControllerTest {
+
+    @Autowired
+    private MockMvc mockMvc;
+
+    @Test
+    void testUserRegistration() throws Exception {
+
+        // Test POST request
+        mockMvc.perform(post("/users/register")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"name\":\"Vaishnavi\","
+                        + "\"email\":\"vaishnavi@gmail.com\","
+                        + "\"password\":\"12345\"}"))
+
+                .andExpect(status().isOk())
+                .andExpect(content().string(
+                        "Registration Successful!"));
+
+        // Test GET request
+        mockMvc.perform(get("/users"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].name")
+                        .value("Vaishnavi"))
+                .andExpect(jsonPath("$[0].email")
+                        .value("vaishnavi@gmail.com"));
+    }
+}
+
+
+Step 5: Execute test cases
+Open terminal inside the project directory.
+
+Execute:
+mvn clean test
+
+
+Step 6: Expected output
+Tests run: 1
+Failures: 0
+Errors: 0
+Skipped: 0
+
+BUILD SUCCESS
+
+
+Step 7: Test application inside Docker
+First build the application:
+mvn clean package
+
+
+Build Docker image:
+docker build -t user-registration .
+
+
+Run the container:
+docker run -d -p 8080:8080 --name registration-app user-registration
+
+
+Check running container:
+docker ps
+
+
+Test the API:
+curl -X POST http://localhost:8080/users/register \
+-H "Content-Type: application/json" \
+-d '{"name":"Vaishnavi","email":"vaishnavi@gmail.com","password":"12345"}'
+
+
+Output:
+Registration Successful!
+
+
+Result: Successfully developed and executed automated test cases for the Spring Boot User Registration application using JUnit and MockMvc and deployed the application using Docker.
