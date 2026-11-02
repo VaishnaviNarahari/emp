@@ -1,0 +1,172 @@
+Aim: To write a simple user registration application for an event using a microservices framework.
+1. EventServiceApplication.java
+package com.example.devopslab;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class EventServiceApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(EventServiceApplication.class, args);
+    }
+}
+
+
+2. Student.java
+package com.example.devopslab;
+
+public class Student {
+
+    private String name;
+    private String email;
+    private String department;
+    private String event;
+
+    public Student() {
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(String department) {
+        this.department = department;
+    }
+
+    public String getEvent() {
+        return event;
+    }
+
+    public void setEvent(String event) {
+        this.event = event;
+    }
+}
+
+
+3. EventController.java
+package com.example.devopslab;
+
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/api")
+public class EventController {
+
+    @GetMapping("/events")
+    public String getEvents() {
+
+        return "Available Events:\n" +
+               "1. Python Workshop\n" +
+               "2. Java Full Stack Workshop\n" +
+               "3. AI and Machine Learning Seminar\n" +
+               "4. Cloud Computing Bootcamp\n" +
+               "5. Web Development Workshop";
+    }
+
+    @PostMapping("/register")
+    public String registerStudent(@RequestBody Student student) {
+
+        return "Registration Successful!\n" +
+               "Name: " + student.getName() + "\n" +
+               "Email: " + student.getEmail() + "\n" +
+               "Department: " + student.getDepartment() + "\n" +
+               "Selected Event: " + student.getEvent();
+    }
+}
+
+
+4. application.properties
+Location: src/main/resources/application.properties
+spring.application.name=devopslab
+server.port=8085
+
+
+5. Project structure
+devopslab
+ └── src
+     └── main
+         ├── java
+         │   └── com.example.devopslab
+         │       ├── EventServiceApplication.java
+         │       ├── EventController.java
+         │       └── Student.java
+         └── resources
+             └── application.properties
+
+
+6. Required dependency
+In Spring Initializr, select:
+
+- Spring Web
+7. Execution
+Run the application:
+mvn spring-boot:run
+
+
+Expected output:
+Tomcat started on port 8085
+Started EventServiceApplication
+
+
+8. Input and Output
+Test 1: Display available events
+
+Method: GET
+
+URL:
+http://localhost:8085/api/events
+
+
+Output:
+Available Events:
+1. Python Workshop
+2. Java Full Stack Workshop
+3. AI and Machine Learning Seminar
+4. Cloud Computing Bootcamp
+5. Web Development Workshop
+
+
+Test 2: Register a student
+
+Method: POST
+
+URL:
+http://localhost:8085/api/register
+
+
+Body → Raw → JSON:
+{
+    "name": "Vaishnavi",
+    "email": "vaishnavi@gmail.com",
+    "department": "CSE",
+    "event": "Java Full Stack Workshop"
+}
+
+
+Output:
+Registration Successful!
+Name: Vaishnavi
+Email: vaishnavi@gmail.com
+Department: CSE
+Selected Event: Java Full Stack Workshop
+
+
+Result: Successfully developed a simple event registration application using Java Spring Boot.
