@@ -1,0 +1,79 @@
+Aim: To practice source code management by uploading the User Registration application developed in Experiment 1 to GitHub.
+
+Requirements:
+- Git
+- GitHub account
+- User Registration Java project
+Procedure
+Step 1: Create a repository on GitHub
+1. Open GitHub.
+2. Login to your account.
+3. Click on New Repository.
+4. Enter repository name as UserRegistration.
+5. Select Public.
+6. Click Create Repository.
+Step 2: Open the project folder in terminal
+cd UserRegistration
+
+
+Step 3: Initialize Git
+git init
+
+
+Step 4: Check the files
+git status
+
+
+Step 5: Add all source code files
+git add .
+
+
+Step 6: Commit the files
+git commit -m "Initial commit - User Registration"
+
+
+Step 7: Connect the local repository to GitHub
+git remote add origin https://github.com/username/UserRegistration.git
+
+
+Replace username with your GitHub username.
+
+Step 8: Push the code to GitHub
+git branch -M main
+git push -u origin main
+
+
+Expected output
+Enumerating objects
+Counting objects
+Writing objects
+To https://github.com/username/UserRegistration.git
+ * [new branch] main -> main
+
+
+Step 9: Modify the source code
+Make a small change in UserController.java, such as changing:
+return "Registration Successful!";
+
+
+to:
+return "User Registered Successfully!";
+
+
+Save the file.
+Step 10: Update GitHub
+git status
+git add .
+git commit -m "Updated registration message"
+git push origin main
+
+
+Step 11: Verify
+Open your GitHub repository and refresh the page.
+
+You can see:
+- Uploaded Java source code.
+- Updated files.
+- Commit history.
+- Changes made to the project.
+Result: Successfully practiced source code management by uploading, modifying, committing, and pushing the User Registration application to GitHub.
